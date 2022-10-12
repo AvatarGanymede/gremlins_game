@@ -1,15 +1,15 @@
 package gremlins;
 
+import gremlins.gameobjects.Player;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.data.JSONObject;
-import processing.data.JSONArray;
 
 import java.util.Random;
 import java.io.*;
 
 
-public class App extends PApplet {
+public class Game extends PApplet {
 
     public static final int WIDTH = 720;
     public static final int HEIGHT = 720;
@@ -24,8 +24,10 @@ public class App extends PApplet {
     
     public PImage brickwall;
     public PImage stonewall;
+    public PImage gremlin;
+    public Player m_Player;
 
-    public App() {
+    public Game() {
         this.configPath = "config.json";
     }
 
@@ -45,10 +47,10 @@ public class App extends PApplet {
         // Load images during setup
         this.stonewall = loadImage(this.getClass().getResource("stonewall.png").getPath().replace("%20", " "));
         this.brickwall = loadImage(this.getClass().getResource("brickwall.png").getPath().replace("%20", " "));
-        //this.gremlin = loadImage(this.getClass().getResource("gremlin.png").getPath().replace("%20", " "));
+        this.gremlin = loadImage(this.getClass().getResource("gremlin.png").getPath().replace("%20", " "));
         //this.slime = loadImage(this.getClass().getResource("slime.png").getPath().replace("%20", " "));
         //this.fireball = loadImage(this.getClass().getResource("fireball.png").getPath().replace("%20", " "));
-        
+        m_Player = new Player(0,100, this.gremlin, 0, 0, this.stonewall);
 
         JSONObject conf = loadJSONObject(new File(this.configPath));
 
@@ -69,15 +71,15 @@ public class App extends PApplet {
 
     }
 
-
     /**
      * Draw all elements in the game by current frame. 
 	 */
     public void draw() {
-        
+        background(255);
+        m_Player.Update(this);
     }
 
     public static void main(String[] args) {
-        PApplet.main("gremlins.App");
+        PApplet.main("gremlins.Game");
     }
 }
