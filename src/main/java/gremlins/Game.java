@@ -1,34 +1,17 @@
 package gremlins;
 
 import gremlins.gameobjects.Player;
+import gremlins.gameutils.GameProxy;
 import processing.core.PApplet;
-import processing.core.PImage;
-import processing.data.JSONObject;
 
-import java.util.Random;
-import java.io.*;
-
+import static gremlins.gameutils.GameConst.*;
 
 public class Game extends PApplet {
+    //public static final Random randomGenerator = new Random();
 
-    public static final int WIDTH = 720;
-    public static final int HEIGHT = 720;
-    public static final int SPRITESIZE = 20;
-    public static final int BOTTOMBAR = 60;
+    public Player player;
 
-    public static final int FPS = 60;
-
-    public static final Random randomGenerator = new Random();
-
-    public String configPath;
-    
-    public PImage brickwall;
-    public PImage stonewall;
-    public PImage gremlin;
-
-    public Game() {
-        this.configPath = "config.json";
-    }
+    public Game() { }
 
     /**
      * Initialise the setting of the window size.
@@ -42,32 +25,36 @@ public class Game extends PApplet {
     */
     public void setup() {
         frameRate(FPS);
+        GameProxy.Instance().gameRef = this;
+        this.player = new Player(0, 0);
 
-        // Load images during setup
-        this.stonewall = loadImage(this.getClass().getResource("stonewall.png").getPath().replace("%20", " "));
-        this.brickwall = loadImage(this.getClass().getResource("brickwall.png").getPath().replace("%20", " "));
-        this.gremlin = loadImage(this.getClass().getResource("gremlin.png").getPath().replace("%20", " "));
-        //this.slime = loadImage(this.getClass().getResource("slime.png").getPath().replace("%20", " "));
-        //this.fireball = loadImage(this.getClass().getResource("fireball.png").getPath().replace("%20", " "));
-
-        JSONObject conf = loadJSONObject(new File(this.configPath));
-        println(conf.getJSONArray("levels").getJSONObject(0).getDouble("wizard_cooldown"));
-
-
+        //JSONObject conf = loadJSONObject(new File(CONFIG_PATH));
+        //println(conf.getJSONArray("levels").getJSONObject(0).getDouble("wizard_cooldown"));
     }
 
     /**
      * Receive key pressed signal from the keyboard.
     */
     public void keyPressed(){
-
+        if(!GameProxy.Instance().registeredKey.containsKey(keyCode)){
+            return;
+        }
+        if(GameProxy.Instance().registeredKey.get(keyCode)){
+            return;
+        }
+        GameProxy.Instance().registeredKey.put(keyCode, true);
+        player.keyPressed(keyCode);
     }
     
     /**
      * Receive key released signal from the keyboard.
     */
     public void keyReleased(){
-
+        if(!GameProxy.Instance().registeredKey.containsKey(keyCode)){
+            return;
+        }
+        GameProxy.Instance().registeredKey.put(keyCode, false);
+        player.keyReleased(keyCode);
     }
 
     /**
@@ -75,6 +62,7 @@ public class Game extends PApplet {
 	 */
     public void draw() {
         background(255);
+        player.Update();
     }
 
     public static void main(String[] args) {
