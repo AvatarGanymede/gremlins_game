@@ -25,7 +25,6 @@ public class Game extends PApplet {
     public PImage brickwall;
     public PImage stonewall;
     public PImage gremlin;
-    public Player m_Player;
 
     public Game() {
         this.configPath = "config.json";
@@ -50,9 +49,9 @@ public class Game extends PApplet {
         this.gremlin = loadImage(this.getClass().getResource("gremlin.png").getPath().replace("%20", " "));
         //this.slime = loadImage(this.getClass().getResource("slime.png").getPath().replace("%20", " "));
         //this.fireball = loadImage(this.getClass().getResource("fireball.png").getPath().replace("%20", " "));
-        m_Player = new Player(0,100, this.gremlin, 0, 0, this.stonewall);
 
         JSONObject conf = loadJSONObject(new File(this.configPath));
+        println(conf.getJSONArray("levels").getJSONObject(0).getDouble("wizard_cooldown"));
 
 
     }
@@ -76,7 +75,6 @@ public class Game extends PApplet {
 	 */
     public void draw() {
         background(255);
-        m_Player.Update(this);
     }
 
     public static void main(String[] args) {

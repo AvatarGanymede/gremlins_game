@@ -1,31 +1,20 @@
 package gremlins.gameobjects;
 
-import gremlins.Game;
-import processing.core.PImage;
+import gremlins.gameutils.GameConst;
+import gremlins.monobehaviours.MonoBehaviours;
 import processing.core.PVector;
 
+import java.util.ArrayList;
+
 public abstract class GameObject {
-    protected PVector m_Position;
-    protected PImage m_Image;
+    public GameConst.GO_TYPE type;
+    public PVector position;
+    protected ArrayList<MonoBehaviours> m_Monos = new ArrayList<MonoBehaviours>();
     public GameObject(){
-        m_Position = new PVector(0, 0);
+        position = new PVector(0, 0);
     }
-    public GameObject(int x, int y, PImage image){
-        SetPosition(x, y);
-        SetImage(image);
+    public GameObject(int x, int y){
+        position = new PVector(x, y);
     }
-    public void SetPosition(int x, int y){
-        m_Position = new PVector(x, y);
-    }
-    public void SetImage(PImage image) {
-        m_Image = image;
-    }
-    public void Update(Game game){
-        if(game != null && m_Image != null){
-            game.image(m_Image, m_Position.x, m_Position.y);
-        }
-    }
-    public void Move(GameConst d){
-        
-    }
+    protected abstract void InitMonos();
 }
