@@ -1,18 +1,20 @@
 package gremlins.monobehaviours;
 
 import gremlins.gameobjects.GameObject;
+import gremlins.gameutils.CollisionProxy;
 import processing.core.PVector;
 
 import static gremlins.gameutils.GameConst.*;
 
-public class Movement extends MonoBehaviours{
+public class Movement extends MonoBehaviour {
     private final int m_Velocity;
     private PVector m_PrevVerticalMove;
     private PVector m_PrevHorizontalMove;
-    private final PVector m_Move;
+    public PVector prevPosition;
+    public final PVector move;
     public Movement(GameObject gameObject){
         super(gameObject);
-        m_Move = new PVector(0, 0);
+        move = new PVector(0, 0);
         this.m_GameObject = gameObject;
         switch (m_GameObject.type) {
             case PLAYER -> m_Velocity = PLAYER_VELOCITY;
@@ -24,9 +26,9 @@ public class Movement extends MonoBehaviours{
 
     @Override
     public void OnUpdate() {
-        PVector move = PVector.mult(m_Move, m_Velocity);
-        //PApplet.println(String.format("%f %f", m_Move.x, m_Move.y));
-        if(m_Move.equals(ZERO_VECTOR)){
+        PVector move = PVector.mult(this.move, m_Velocity);
+        prevPosition = m_GameObject.position.copy();
+        if(this.move.equals(ZERO_VECTOR)){
             PVector position = m_GameObject.position;
             int tileSize = TILE_SIZE;
             if(position.x % tileSize != 0){
@@ -40,6 +42,7 @@ public class Movement extends MonoBehaviours{
         }else{
             m_GameObject.position.add(move);
         }
+        CollisionProxy.Instance().checkMoveCollision(m_GameObject);
     }
 
     @Override
@@ -48,7 +51,7 @@ public class Movement extends MonoBehaviours{
             return;
         }
         PVector move = KEY2DIRECTION.get(key);
-        m_Move.add(move);
+        this.move.add(move);
     }
 
     @Override
@@ -56,9 +59,9 @@ public class Movement extends MonoBehaviours{
         if(!KEY2DIRECTION.containsKey(key)){
             return;
         }
-        m_PrevVerticalMove = m_Move.copy(); m_PrevVerticalMove.x = 0;
-        m_PrevHorizontalMove = m_Move.copy(); m_PrevHorizontalMove.y = 0;
+        m_PrevVerticalMove = move.copy(); m_PrevVerticalMove.x = 0;
+        m_PrevHorizontalMove = move.copy(); m_PrevHorizontalMove.y = 0;
         PVector move = KEY2DIRECTION.get(key);
-        m_Move.sub(move);
+        this.move.sub(move);
     }
 }

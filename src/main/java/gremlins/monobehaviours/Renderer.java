@@ -12,7 +12,7 @@ import java.util.Stack;
 
 import static gremlins.gameutils.GameConst.*;
 
-public class Renderer extends MonoBehaviours {
+public class Renderer extends MonoBehaviour {
     public int pathIndex;
     private final ArrayList<PImage> m_Images;
     private final Stack<Integer> m_KeyStack;

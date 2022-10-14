@@ -7,11 +7,16 @@ import java.util.Map;
 public class GameConst {
     public static final int WIDTH = 720;
     public static final int HEIGHT = 720;
+
+    public static final int TILE_NUM_X = 36;
+    public static final int TILE_NUM_Y = 33;
+    public static final int TILE_SIZE = 20;
+
+
     //public static final int SPRITE_SIZE = 20;
     //public static final int BOTTOM_BAR = 60;
 
     public static final int FPS = 60;
-    public static final int TILE_SIZE = 20;
     public static final PVector ZERO_VECTOR = new PVector(0, 0);
 
     public static final int LEFT_KEY = 37;
@@ -27,7 +32,9 @@ public class GameConst {
     public enum GO_TYPE{
         PLAYER,
         GREMLINS,
-        FIREBALL
+        FIREBALL,
+        BRICKWALL,
+        STONEWALL
     }
     public static final int PLAYER_VELOCITY = 2;
     public static final int FIREBALL_VELOCITY = 4;
@@ -46,5 +53,6 @@ public class GameConst {
     public static final String[] WIZARD_PATHS = {"wizard0.png", "wizard1.png", "wizard2.png", "wizard3.png"};
 
     public static final String MOVEMENT = "Movement";
+    public static final String COLLISION = "Collision";
     public static final String RENDERER = "Renderer";
 }

@@ -2,9 +2,9 @@ package gremlins.monobehaviours;
 
 import gremlins.gameobjects.GameObject;
 
-public abstract class MonoBehaviours {
+public abstract class MonoBehaviour {
     protected GameObject m_GameObject;
-    MonoBehaviours(GameObject gameObject){
+    MonoBehaviour(GameObject gameObject){
         m_GameObject = gameObject;
     }
     public abstract void OnUpdate();

@@ -1,6 +1,8 @@
 package gremlins.gameobjects;
 
 import static gremlins.gameutils.GameConst.*;
+
+import gremlins.monobehaviours.Collision;
 import gremlins.monobehaviours.Movement;
 import gremlins.monobehaviours.Renderer;
 
@@ -13,6 +15,7 @@ public class Player extends GameObject{
     @Override
     protected void InitMonos(){
         m_Monos.put(MOVEMENT, new Movement(this));
+        m_Monos.put(COLLISION, new Collision(this, false));
         m_Monos.put(RENDERER, new Renderer(this));
     }
     public void keyPressed(Integer key){
