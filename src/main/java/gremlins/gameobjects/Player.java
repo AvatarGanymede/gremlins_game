@@ -18,6 +18,12 @@ public class Player extends GameObject{
         m_Monos.put(COLLISION, new Collision(this, false));
         m_Monos.put(RENDERER, new Renderer(this));
     }
+
+    @Override
+    public void destroy() {
+
+    }
+
     public void keyPressed(Integer key){
         for (var monoKey : m_Monos.keySet()) {
             m_Monos.get(monoKey).keyPressed(key);

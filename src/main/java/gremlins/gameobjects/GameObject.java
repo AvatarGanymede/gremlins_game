@@ -25,4 +25,5 @@ public abstract class GameObject {
         }
         return m_Monos.get(monoName);
     }
+    public abstract void destroy();
 }

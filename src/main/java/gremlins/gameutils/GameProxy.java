@@ -1,6 +1,7 @@
 package gremlins.gameutils;
 
 import gremlins.Game;
+import gremlins.gameobjects.FireBall;
 
 import static gremlins.gameutils.GameConst.*;
 
@@ -11,11 +12,14 @@ public class GameProxy {
     public Game gameRef;
     public HashMap<Integer, Boolean> registeredKey;
     public GameProxy(){
-        this.registeredKey = new HashMap<>();
+        registeredKey = new HashMap<>();
         registeredKey.put(LEFT_KEY, false);
         registeredKey.put(RIGHT_KEY, false);
         registeredKey.put(UP_KEY, false);
         registeredKey.put(DOWN_KEY, false);
+        registeredKey.put(FIRE_KEY, false);
+
+        FireBalls = new HashMap<>();
     }
     public static GameProxy Instance(){
         if(m_GameProxy == null){
@@ -23,4 +27,6 @@ public class GameProxy {
         }
         return m_GameProxy;
     }
+
+    public HashMap<Integer, FireBall> FireBalls;
 }

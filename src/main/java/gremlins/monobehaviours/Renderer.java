@@ -26,6 +26,7 @@ public class Renderer extends MonoBehaviour {
             case PLAYER -> paths = WIZARD_PATHS;
             case FIREBALL -> paths = FIREBALL_PATHS;
             case GREMLINS -> paths = GREMLIN_PATHS;
+            case STONEWALL -> paths = STONE_WALL_PATHS;
             default -> paths = null;
         }
         m_Images = new ArrayList<>();

@@ -1,6 +1,8 @@
 package gremlins;
 
+import gremlins.gameobjects.Gremlin;
 import gremlins.gameobjects.Player;
+import gremlins.gameobjects.StoneWall;
 import gremlins.gameutils.GameProxy;
 import processing.core.PApplet;
 
@@ -10,6 +12,8 @@ public class Game extends PApplet {
     //public static final Random randomGenerator = new Random();
 
     public Player player;
+    public StoneWall stoneWall;
+    public Gremlin gremlin;
 
     public Game() { }
 
@@ -27,6 +31,8 @@ public class Game extends PApplet {
         frameRate(FPS);
         GameProxy.Instance().gameRef = this;
         this.player = new Player(0, 0);
+        this.stoneWall = new StoneWall(100, 100);
+        this.gremlin = new Gremlin(80, 100);
 
         //JSONObject conf = loadJSONObject(new File(CONFIG_PATH));
         //println(conf.getJSONArray("levels").getJSONObject(0).getDouble("wizard_cooldown"));
@@ -63,6 +69,8 @@ public class Game extends PApplet {
     public void draw() {
         background(255);
         player.Update();
+        stoneWall.Update();
+        gremlin.Update();
     }
 
     public static void main(String[] args) {
