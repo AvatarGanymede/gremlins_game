@@ -30,12 +30,15 @@ public class CollisionProxy {
         PVector mapIndex = getMapIndex(go.position);
         if(m_Go2MapIndex.containsKey(hashCode)){
             if(!m_Go2MapIndex.get(hashCode).equals(mapIndex)){
-                m_Go2MapIndex.get(hashCode).set(mapIndex);
+                PVector prevMapIndex = m_Go2MapIndex.get(hashCode);
+                m_CollisionMap[(int) prevMapIndex.x][(int) prevMapIndex.y] = null;
             }
         }else{
-            m_CollisionMap[(int) mapIndex.x][(int) mapIndex.y] = go;
-            m_Go2MapIndex.put(hashCode, mapIndex);
+            m_Go2MapIndex.put(hashCode, new PVector(0, 0));
         }
+
+        m_CollisionMap[(int) mapIndex.x][(int) mapIndex.y] = go;
+        m_Go2MapIndex.get(hashCode).set(mapIndex);
     }
 
     public void unregisterCollision(GameObject go){
