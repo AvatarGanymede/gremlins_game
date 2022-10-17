@@ -62,7 +62,7 @@ public class Movement extends MonoBehaviour {
         m_GameObject.position.add(move);
         prevPosition.set(m_GameObject.position);
         ArrayList<GameObject> collisions = CollisionProxy.Instance().checkCollision(m_GameObject);
-        if(collisions.size() != 0){
+        if(collisions.size() != 0 && !(collisions.size() == 1 && collisions.get(0).type == GO_TYPE.PLAYER)){
             m_GameObject.destroy();
         }
     }

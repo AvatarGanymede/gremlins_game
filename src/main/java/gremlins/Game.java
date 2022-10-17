@@ -1,5 +1,6 @@
 package gremlins;
 
+import gremlins.gameobjects.FireBall;
 import gremlins.gameobjects.Gremlin;
 import gremlins.gameobjects.Player;
 import gremlins.gameobjects.StoneWall;
@@ -71,6 +72,9 @@ public class Game extends PApplet {
         player.Update();
         stoneWall.Update();
         gremlin.Update();
+        for(int hashCode : GameProxy.Instance().FireBalls.keySet()){
+            GameProxy.Instance().FireBalls.get(hashCode).Update();
+        }
     }
 
     public static void main(String[] args) {

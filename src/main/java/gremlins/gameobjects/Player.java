@@ -3,8 +3,10 @@ package gremlins.gameobjects;
 import static gremlins.gameutils.GameConst.*;
 
 import gremlins.monobehaviours.Collision;
+import gremlins.monobehaviours.FireSystem;
 import gremlins.monobehaviours.Movement;
 import gremlins.monobehaviours.Renderer;
+import processing.core.PVector;
 
 public class Player extends GameObject{
     public Player(int x, int y){
@@ -12,11 +14,19 @@ public class Player extends GameObject{
         type = GO_TYPE.PLAYER;
         InitMonos();
     }
+    public PVector getDirection(){
+        Renderer renderer = (Renderer) m_Monos.get(RENDERER);
+        if(renderer == null){
+            return null;
+        }
+        return KEY2DIRECTION.get(PLAYER_INDEX2KEY.get(renderer.pathIndex));
+    }
     @Override
     protected void InitMonos(){
         m_Monos.put(MOVEMENT, new Movement(this));
         m_Monos.put(COLLISION, new Collision(this, false));
         m_Monos.put(RENDERER, new Renderer(this));
+        m_Monos.put(FIRE_SYSTEM, new FireSystem(this));
     }
 
     @Override

@@ -45,6 +45,7 @@ public class GameConst {
     //public static final JSONObject CONFIG = PApplet.loadJSONObject(new File(CONFIG_PATH));
 
     public static final Map<Integer, Integer> PLAYER_KEY2INDEX = Map.of(LEFT_KEY, 0, RIGHT_KEY, 1, UP_KEY, 2, DOWN_KEY, 3);
+    public static final Map<Integer, Integer> PLAYER_INDEX2KEY = Map.of(0, LEFT_KEY, 1, RIGHT_KEY, 2, UP_KEY, 3, DOWN_KEY);
     //
     //    //public static final String[] BRICK_WALL_PATHS = {"brickwall.png", "brickwall_destroyed0.png", "brickwall_destroyed0.png", "brickwall_destroyed0.png", "brickwall_destroyed0.png"};
     public static final String[] FIREBALL_PATHS = {"fireball.png"};
@@ -56,4 +57,5 @@ public class GameConst {
     public static final String MOVEMENT = "Movement";
     public static final String COLLISION = "Collision";
     public static final String RENDERER = "Renderer";
+    public static final String FIRE_SYSTEM = "FireSystem";
 }

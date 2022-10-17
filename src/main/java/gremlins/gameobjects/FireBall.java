@@ -5,6 +5,7 @@ import gremlins.gameutils.GameProxy;
 import gremlins.monobehaviours.Collision;
 import gremlins.monobehaviours.Movement;
 import gremlins.monobehaviours.Renderer;
+import processing.core.PVector;
 
 import static gremlins.gameutils.GameConst.*;
 
@@ -15,8 +16,17 @@ public class FireBall extends GameObject {
         InitMonos();
     }
 
-    public static void create(int x, int y){
+    public void setMove(PVector move){
+        Movement movement = (Movement) m_Monos.get(MOVEMENT);
+        if(movement == null){
+            return;
+        }
+        movement.move.set(move);
+    }
+
+    public static void create(int x, int y, PVector move){
         FireBall fireBall = new FireBall(x, y);
+        fireBall.setMove(move);
         GameProxy.Instance().FireBalls.put(fireBall.hashCode(), fireBall);
     }
 
