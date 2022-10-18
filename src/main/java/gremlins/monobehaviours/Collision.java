@@ -19,10 +19,10 @@ public class Collision extends MonoBehaviour {
         if(m_GameObject.type == GO_TYPE.PLAYER){
             if(collision.type == GO_TYPE.BRICKWALL || collision.type == GO_TYPE.STONEWALL){
                 Movement movement = (Movement) m_GameObject.getMono(MOVEMENT);
-                if(collision.position.x != m_GameObject.position.x){
+                if(movement.prevPosition.x % TILE_SIZE == 0 && collision.position.x != m_GameObject.position.x){
                     m_GameObject.position.x = movement.prevPosition.x;
                 }
-                if(collision.position.y != m_GameObject.position.y){
+                if(CollisionProxy.isInCollision(m_GameObject, collision) && collision.position.y != m_GameObject.position.y){
                     m_GameObject.position.y = movement.prevPosition.y;
                 }
             }

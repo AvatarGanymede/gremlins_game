@@ -44,13 +44,11 @@ public class Movement extends MonoBehaviour {
             PVector verticalMove = PVector.mult(m_PrevVerticalMove, m_Velocity);
             m_GameObject.position.add(verticalMove);
         }
-        //CollisionProxy.Instance().checkMoveCollision(m_GameObject);
     }
 
     private void gremlinMove(){
         PVector prevMove = this.move.copy();
         if(m_GameObject.position.x % TILE_SIZE == 0 && m_GameObject.position.y % TILE_SIZE == 0){
-            this.move.set(CollisionProxy.Instance().calcGremlinMove(m_GameObject, prevMove));
         }
         PVector move = PVector.mult(this.move, m_Velocity);
         m_GameObject.position.add(move);
