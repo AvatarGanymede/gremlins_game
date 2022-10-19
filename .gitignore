@@ -26,8 +26,4 @@ replay_pid*
 *.bin
 *.probe
 *.xml
-*.bin
-*.xml
 *.iml
-*.probe
-*.lock

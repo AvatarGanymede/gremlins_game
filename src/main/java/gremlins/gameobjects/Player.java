@@ -2,6 +2,7 @@ package gremlins.gameobjects;
 
 import static gremlins.gameutils.GameConst.*;
 
+import gremlins.gameutils.CollisionProxy;
 import gremlins.monobehaviours.Collision;
 import gremlins.monobehaviours.FireSystem;
 import gremlins.monobehaviours.Movement;
@@ -31,7 +32,7 @@ public class Player extends GameObject{
 
     @Override
     public void destroy() {
-
+        CollisionProxy.Instance().unregisterCollision(this);
     }
 
     public void keyPressed(Integer key){

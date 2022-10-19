@@ -1,11 +1,11 @@
 package gremlins;
 
-import gremlins.gameobjects.FireBall;
-import gremlins.gameobjects.Gremlin;
-import gremlins.gameobjects.Player;
-import gremlins.gameobjects.StoneWall;
+import gremlins.gameobjects.*;
 import gremlins.gameutils.GameProxy;
 import processing.core.PApplet;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import static gremlins.gameutils.GameConst.*;
 
@@ -15,6 +15,7 @@ public class Game extends PApplet {
     public Player player;
     public StoneWall stoneWall;
     public Gremlin gremlin;
+    public BrickWall brickWall;
 
     public Game() { }
 
@@ -30,13 +31,14 @@ public class Game extends PApplet {
     */
     public void setup() {
         frameRate(FPS);
+        PLAYER_COOL_DOWN_TIME = CONFIG.getJSONArray("levels").getJSONObject(0).getDouble("wizard_cooldown");
+        GREMLIN_COOL_DOWN_TIME = CONFIG.getJSONArray("levels").getJSONObject(0).getDouble("enemy_cooldown");
+
         GameProxy.Instance().gameRef = this;
         this.player = new Player(0, 0);
         this.stoneWall = new StoneWall(100, 100);
         this.gremlin = new Gremlin(80, 100);
-
-        //JSONObject conf = loadJSONObject(new File(CONFIG_PATH));
-        //println(conf.getJSONArray("levels").getJSONObject(0).getDouble("wizard_cooldown"));
+        this.brickWall = new BrickWall(120, 120);
     }
 
     /**
@@ -69,12 +71,15 @@ public class Game extends PApplet {
 	 */
     public void draw() {
         background(255);
+        TIME_STAMP = TIME_STAMP.add(BigDecimal.valueOf(DELTA_TIME));
         player.Update();
         stoneWall.Update();
         gremlin.Update();
+        brickWall.Update();
         for(int hashCode : GameProxy.Instance().FireBalls.keySet()){
             GameProxy.Instance().FireBalls.get(hashCode).Update();
         }
+        FRAME_TICK = FRAME_TICK.add(BigInteger.ONE);
     }
 
     public static void main(String[] args) {

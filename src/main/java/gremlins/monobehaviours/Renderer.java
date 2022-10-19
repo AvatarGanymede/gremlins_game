@@ -6,6 +6,7 @@ import gremlins.gameutils.GameProxy;
 import processing.core.PImage;
 import processing.core.PVector;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Stack;
@@ -14,11 +15,13 @@ import static gremlins.gameutils.GameConst.*;
 
 public class Renderer extends MonoBehaviour {
     public int pathIndex;
+    public boolean beDestroyed;
     private final ArrayList<PImage> m_Images;
     private final Stack<Integer> m_KeyStack;
     public Renderer(GameObject gameObject){
         super(gameObject);
         pathIndex = 0;
+        beDestroyed = false;
         m_KeyStack = new Stack<>();
         Game gameRef = GameProxy.Instance().gameRef;
         String[] paths;
@@ -27,6 +30,7 @@ public class Renderer extends MonoBehaviour {
             case FIREBALL -> paths = FIREBALL_PATHS;
             case GREMLINS -> paths = GREMLIN_PATHS;
             case STONEWALL -> paths = STONE_WALL_PATHS;
+            case BRICKWALL -> paths = BRICK_WALL_PATHS;
             default -> paths = null;
         }
         m_Images = new ArrayList<>();
@@ -44,11 +48,21 @@ public class Renderer extends MonoBehaviour {
             return;
         }
         PVector position = m_GameObject.position;
-        GameProxy.Instance().gameRef.image(m_Images.get(pathIndex), position.x, position.y);
+        if(beDestroyed && FRAME_TICK.mod(BigInteger.valueOf(BRICK_DESTROY_DELTA_FRAME)).compareTo(BigInteger.ZERO) == 0){
+            pathIndex ++;
+        }
+        if(pathIndex < m_Images.size()){
+            GameProxy.Instance().gameRef.image(m_Images.get(pathIndex), position.x, position.y);
+        }else{
+            m_GameObject.destroy();
+        }
     }
 
     @Override
     public void keyPressed(Integer key) {
+        if(m_GameObject.type != GO_TYPE.PLAYER){
+            return;
+        }
         if(!PLAYER_KEY2INDEX.containsKey(key)){
             return;
         }
@@ -58,6 +72,9 @@ public class Renderer extends MonoBehaviour {
 
     @Override
     public void keyReleased(Integer key) {
+        if(m_GameObject.type != GO_TYPE.PLAYER){
+            return;
+        }
         if(!PLAYER_KEY2INDEX.containsKey(key)){
             return;
         }

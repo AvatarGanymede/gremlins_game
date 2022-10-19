@@ -30,7 +30,6 @@ public class Movement extends MonoBehaviour {
     }
     private void playerMove(){
         PVector move = PVector.mult(this.move, m_Velocity);
-        prevPosition.set(m_GameObject.position);
         if(!this.move.equals(ZERO_VECTOR)){
             m_GameObject.position.add(move);
         }
@@ -47,32 +46,34 @@ public class Movement extends MonoBehaviour {
     }
 
     private void gremlinMove(){
-        PVector prevMove = this.move.copy();
-        if(m_GameObject.position.x % TILE_SIZE == 0 && m_GameObject.position.y % TILE_SIZE == 0){
-        }
         PVector move = PVector.mult(this.move, m_Velocity);
         m_GameObject.position.add(move);
-        prevPosition.set(m_GameObject.position);
     }
 
     private void fireBallMove(){
         PVector move = PVector.mult(this.move, m_Velocity);
         m_GameObject.position.add(move);
-        prevPosition.set(m_GameObject.position);
-        ArrayList<GameObject> collisions = CollisionProxy.Instance().checkCollision(m_GameObject);
-        if(collisions.size() != 0 && !(collisions.size() == 1 && collisions.get(0).type == GO_TYPE.PLAYER)){
-            m_GameObject.destroy();
+
+    }
+
+    private void checkBoarder(){
+        if(m_GameObject.position.x < 0 || m_GameObject.position.x > TILE_SIZE*(TILE_NUM_X-1)){
+            m_GameObject.position.x = prevPosition.x;
+        }
+        if(m_GameObject.position.y < 0 || m_GameObject.position.y > TILE_SIZE*(TILE_NUM_Y-1)){
+            m_GameObject.position.y = prevPosition.y;
         }
     }
 
     @Override
     public void OnUpdate() {
+        prevPosition.set(m_GameObject.position);
         switch (m_GameObject.type){
             case PLAYER -> playerMove();
             case GREMLINS -> gremlinMove();
             case FIREBALL -> fireBallMove();
         }
-
+        checkBoarder();
     }
 
     @Override

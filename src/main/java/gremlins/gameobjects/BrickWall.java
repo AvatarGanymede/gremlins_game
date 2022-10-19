@@ -1,24 +1,24 @@
 package gremlins.gameobjects;
 
 import gremlins.gameutils.CollisionProxy;
+import gremlins.gameutils.GameConst;
 import gremlins.monobehaviours.Collision;
-import gremlins.monobehaviours.Movement;
 import gremlins.monobehaviours.Renderer;
 
-import static gremlins.gameutils.GameConst.*;
+import static gremlins.gameutils.GameConst.COLLISION;
+import static gremlins.gameutils.GameConst.RENDERER;
 
-public class Gremlin extends GameObject{
+public class BrickWall extends GameObject{
 
-    public Gremlin(int x, int y) {
+    public BrickWall(int x, int y) {
         super(x, y);
-        type = GO_TYPE.GREMLINS;
+        type = GameConst.GO_TYPE.BRICKWALL;
         InitMonos();
     }
 
     @Override
     protected void InitMonos() {
-        m_Monos.put(MOVEMENT, new Movement(this));
-        m_Monos.put(COLLISION, new Collision(this, false));
+        m_Monos.put(COLLISION, new Collision(this, true));
         m_Monos.put(RENDERER, new Renderer(this));
     }
 

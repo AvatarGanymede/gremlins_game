@@ -1,5 +1,6 @@
 package gremlins.gameobjects;
 
+import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameConst;
 import gremlins.monobehaviours.Collision;
 import gremlins.monobehaviours.Renderer;
@@ -22,6 +23,6 @@ public class StoneWall extends GameObject {
 
     @Override
     public void destroy() {
-
+        CollisionProxy.Instance().unregisterCollision(this);
     }
 }

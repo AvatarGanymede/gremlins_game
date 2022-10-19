@@ -6,6 +6,7 @@ import gremlins.gameobjects.FireBall;
 import static gremlins.gameutils.GameConst.*;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GameProxy {
     private static GameProxy m_GameProxy;
@@ -19,7 +20,7 @@ public class GameProxy {
         registeredKey.put(DOWN_KEY, false);
         registeredKey.put(FIRE_KEY, false);
 
-        FireBalls = new HashMap<>();
+        FireBalls = new ConcurrentHashMap<>();
     }
     public static GameProxy Instance(){
         if(m_GameProxy == null){
@@ -28,5 +29,5 @@ public class GameProxy {
         return m_GameProxy;
     }
 
-    public HashMap<Integer, FireBall> FireBalls;
+    public ConcurrentHashMap<Integer, FireBall> FireBalls;
 }

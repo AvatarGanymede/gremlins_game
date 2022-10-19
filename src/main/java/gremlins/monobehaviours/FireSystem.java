@@ -3,15 +3,21 @@ package gremlins.monobehaviours;
 import gremlins.gameobjects.FireBall;
 import gremlins.gameobjects.GameObject;
 import gremlins.gameobjects.Player;
-import gremlins.gameutils.GameProxy;
+
+import java.math.BigDecimal;
 
 import static gremlins.gameutils.GameConst.*;
 
 public class FireSystem extends MonoBehaviour{
-    private Player m_Player;
+    private double m_CoolDown;
+    private BigDecimal m_NextShootTime;
     public FireSystem(GameObject gameObject) {
         super(gameObject);
-        m_Player = (Player) gameObject;
+        m_NextShootTime = BigDecimal.valueOf(0);
+        switch (m_GameObject.type){
+            case PLAYER -> m_CoolDown = PLAYER_COOL_DOWN_TIME;
+            case GREMLINS -> m_CoolDown = GREMLIN_COOL_DOWN_TIME;
+        }
     }
 
     @Override
@@ -21,9 +27,10 @@ public class FireSystem extends MonoBehaviour{
 
     @Override
     public void keyPressed(Integer key) {
-        if(key == FIRE_KEY){
+        if(key == FIRE_KEY && TIME_STAMP.compareTo(m_NextShootTime) >= 0){
             Player player = (Player) m_GameObject;
             FireBall.create((int)m_GameObject.position.x, (int)m_GameObject.position.y, player.getDirection());
+            m_NextShootTime = TIME_STAMP.add(BigDecimal.valueOf(m_CoolDown));
         }
     }
 

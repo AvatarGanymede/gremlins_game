@@ -90,6 +90,44 @@ public class CollisionProxy {
                 posA.y + TILE_SIZE > posB.y;
     }
 
+    public PVector calcGremlinMove(GameObject go, PVector prevMove){
+        Movement movement = (Movement) go.getMono(MOVEMENT);
+        if(movement == null){
+            return null;
+        }
+        PVector mapIndex = getMapIndex(go.position);
+        ArrayList<PVector> choices = new ArrayList<>();
+        for(Integer dir : KEY2DIRECTION.keySet()){
+            PVector dirMove = KEY2DIRECTION.get(dir);
+            if((dirMove.x*prevMove.x + dirMove.y*prevMove.y == 0) && !isWall((int)(dirMove.x+mapIndex.x), (int)(dirMove.y+mapIndex.y))){
+                choices.add(dirMove);
+            }
+        }
+        if(choices.isEmpty()){
+            return new PVector(0-prevMove.x, 0-prevMove.y);
+        }else{
+            return choices.get(random.nextInt(choices.size()));
+        }
+    }
+
+    private boolean isWall(int x, int y){
+        if(x < 0 || x > TILE_NUM_X-1){
+            return true;
+        }
+        if(y < 0 || y > TILE_NUM_Y-1){
+            return true;
+        }
+        if(m_CollisionMap[x][y] == null || m_CollisionMap[x][y].count() == 0){
+            return false;
+        }
+        for(GameObject go : m_CollisionMap[x][y].getList()){
+            if(go.type == GO_TYPE.BRICKWALL || go.type == GO_TYPE.STONEWALL){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private final GameObjectList[][] m_CollisionMap = new GameObjectList[TILE_NUM_X][TILE_NUM_Y];
     private final HashMap<Integer, PVector> m_Go2MapIndex = new HashMap<>();
 }

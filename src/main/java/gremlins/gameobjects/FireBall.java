@@ -1,6 +1,7 @@
 package gremlins.gameobjects;
 
 import gremlins.gameobjects.GameObject;
+import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameProxy;
 import gremlins.monobehaviours.Collision;
 import gremlins.monobehaviours.Movement;
@@ -32,6 +33,7 @@ public class FireBall extends GameObject {
 
     public void destroy(){
         GameProxy.Instance().FireBalls.remove(this.hashCode());
+        CollisionProxy.Instance().unregisterCollision(this);
     }
 
     @Override
