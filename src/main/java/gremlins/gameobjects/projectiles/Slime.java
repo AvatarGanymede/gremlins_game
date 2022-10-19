@@ -1,12 +1,10 @@
-package gremlins.gameobjects;
+package gremlins.gameobjects.projectiles;
 
 import gremlins.gameutils.GameConst;
 import gremlins.gameutils.GameProxy;
 import processing.core.PVector;
 
-import static gremlins.gameutils.GameConst.*;
-
-public class Slime extends AttackEntity{
+public class Slime extends Projectile {
 
     public Slime(int x, int y) {
         super(x, y);
@@ -17,6 +15,6 @@ public class Slime extends AttackEntity{
     public static void create(int x, int y, PVector move){
         Slime slime = new Slime(x, y);
         slime.setMove(move);
-        GameProxy.Instance().Entities.put(slime.hashCode(), slime);
+        GameProxy.Instance().entities.put(slime.hashCode(), slime);
     }
 }

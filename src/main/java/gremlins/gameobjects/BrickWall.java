@@ -2,11 +2,11 @@ package gremlins.gameobjects;
 
 import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameConst;
+import gremlins.gameutils.GameProxy;
 import gremlins.monobehaviours.Collision;
 import gremlins.monobehaviours.Renderer;
 
-import static gremlins.gameutils.GameConst.COLLISION;
-import static gremlins.gameutils.GameConst.RENDERER;
+import static gremlins.gameutils.GameConst.*;
 
 public class BrickWall extends GameObject{
 
@@ -25,5 +25,6 @@ public class BrickWall extends GameObject{
     @Override
     public void destroy() {
         CollisionProxy.Instance().unregisterCollision(this);
+        GameProxy.Instance().registerNonWallTile(position.div(TILE_SIZE));
     }
 }

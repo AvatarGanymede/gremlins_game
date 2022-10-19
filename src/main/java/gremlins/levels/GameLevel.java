@@ -2,13 +2,11 @@ package gremlins.levels;
 
 import gremlins.gameobjects.*;
 import gremlins.gameutils.CollisionProxy;
-import gremlins.gameutils.GameObjectList;
 import gremlins.gameutils.GameProxy;
 import gremlins.gameutils.GameUtils;
-import processing.core.PApplet;
+import processing.core.PVector;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -31,6 +29,7 @@ public class GameLevel extends Level {
         GameProxy.Instance().loadLevel();
         loadLevelConfig();
         GameProxy.Instance().gameRef.isLoaded = true;
+        m_IsUnloaded = false;
     }
 
     @Override
@@ -39,6 +38,7 @@ public class GameLevel extends Level {
         player = null;
         CollisionProxy.Instance().reset();
         levelIndex ++;
+        m_IsUnloaded = true;
     }
 
     @Override
@@ -64,8 +64,11 @@ public class GameLevel extends Level {
 
     @Override
     public void Update() {
-        for(Integer hashCode : GameProxy.Instance().Entities.keySet()){
-            GameProxy.Instance().Entities.get(hashCode).Update();
+        for(Integer hashCode : GameProxy.Instance().entities.keySet()){
+            GameProxy.Instance().entities.get(hashCode).Update();
+            if(m_IsUnloaded){
+                return;
+            }
         }
     }
 
@@ -147,14 +150,17 @@ public class GameLevel extends Level {
                 go = new Door(cordX, cordY);
                 m_doorNum ++;
             }
-            case ' ' -> go = null;
+            case ' ' -> {
+                go = null;
+                GameProxy.Instance().registerNonWallTile(new PVector(x, y));
+            }
             default -> {return false;}
         }
         if(m_wizardNum > 1 || m_doorNum > 1){
             return false;
         }
         if(go != null){
-            GameProxy.Instance().Entities.put(go.hashCode(), go);
+            GameProxy.Instance().entities.put(go.hashCode(), go);
         }
         return true;
     }

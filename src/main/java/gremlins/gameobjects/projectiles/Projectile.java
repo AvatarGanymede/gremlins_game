@@ -1,5 +1,6 @@
-package gremlins.gameobjects;
+package gremlins.gameobjects.projectiles;
 
+import gremlins.gameobjects.GameObject;
 import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameProxy;
 import gremlins.monobehaviours.Collision;
@@ -9,9 +10,9 @@ import processing.core.PVector;
 
 import static gremlins.gameutils.GameConst.*;
 
-public class AttackEntity extends GameObject{
+public class Projectile extends GameObject {
 
-    public AttackEntity(int x, int y) {
+    public Projectile(int x, int y) {
         super(x, y);
     }
 
@@ -32,7 +33,7 @@ public class AttackEntity extends GameObject{
 
     @Override
     public void destroy() {
-        GameProxy.Instance().Entities.remove(this.hashCode());
+        GameProxy.Instance().entities.remove(this.hashCode());
         CollisionProxy.Instance().unregisterCollision(this);
     }
 }

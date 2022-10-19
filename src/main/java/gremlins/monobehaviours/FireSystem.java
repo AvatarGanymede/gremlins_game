@@ -1,6 +1,8 @@
 package gremlins.monobehaviours;
 
 import gremlins.gameobjects.*;
+import gremlins.gameobjects.projectiles.FireBall;
+import gremlins.gameobjects.projectiles.Slime;
 import gremlins.gameutils.GameUtils;
 
 import java.math.BigDecimal;

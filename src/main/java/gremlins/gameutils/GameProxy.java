@@ -2,10 +2,13 @@ package gremlins.gameutils;
 
 import gremlins.Game;
 import gremlins.gameobjects.GameObject;
+import org.checkerframework.checker.units.qual.A;
 import processing.core.PFont;
+import processing.core.PVector;
 
 import static gremlins.gameutils.GameConst.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,7 +17,8 @@ public class GameProxy {
     public Game gameRef;
     public HashMap<Integer, Boolean> registeredKey;
     public GameProxy(){
-        Entities = new ConcurrentHashMap<>();
+        entities = new ConcurrentHashMap<>();
+        nonWallTile = new ArrayList<>();
     }
     public static GameProxy Instance(){
         if(m_GameProxy == null){
@@ -28,8 +32,12 @@ public class GameProxy {
     public void unloadLevel(){
         gameRef.isLoaded = false;
         unregisterKeys();
-        Entities.clear();
+        entities.clear();
+        nonWallTile.clear();
         CollisionProxy.Instance().reset();
+    }
+    public void registerNonWallTile(PVector pos){
+        nonWallTile.add(pos);
     }
     private void registerKeys(){
         registeredKey = new HashMap<>();
@@ -42,7 +50,8 @@ public class GameProxy {
     private void unregisterKeys(){
         registeredKey.clear();
     }
-    public ConcurrentHashMap<Integer, GameObject> Entities;
+    public ConcurrentHashMap<Integer, GameObject> entities;
+    public ArrayList<PVector> nonWallTile;
     public PFont textFont;
     public PFont titleFont;
 }

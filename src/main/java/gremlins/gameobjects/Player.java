@@ -3,6 +3,8 @@ package gremlins.gameobjects;
 import static gremlins.gameutils.GameConst.*;
 
 import gremlins.gameutils.CollisionProxy;
+import gremlins.gameutils.GameProxy;
+import gremlins.levels.textlevels.GameOverLevel;
 import gremlins.monobehaviours.Collision;
 import gremlins.monobehaviours.FireSystem;
 import gremlins.monobehaviours.Movement;
@@ -10,10 +12,19 @@ import gremlins.monobehaviours.Renderer;
 import processing.core.PVector;
 
 public class Player extends GameObject{
+    public int lives;
     public Player(int x, int y){
         super(x, y);
         type = GO_TYPE.PLAYER;
+        lives = MAX_PLAYER_LIVES;
         InitMonos();
+    }
+    public void beKilled(){
+        lives --;
+        if(lives < 0){
+            GameProxy.Instance().gameRef.level.unloadLevel();
+            GameProxy.Instance().gameRef.level = new GameOverLevel();
+        }
     }
     public PVector getDirection(){
         Renderer renderer = (Renderer) m_Monos.get(RENDERER);

@@ -9,6 +9,7 @@ import static gremlins.gameutils.GameConst.FRAME_TICK;
 import static gremlins.gameutils.GameConst.TIME_STAMP;
 
 public abstract class Level{
+    protected boolean m_IsUnloaded;
     public Level(){
         TIME_STAMP = BigDecimal.ZERO;
         FRAME_TICK = BigInteger.ZERO;

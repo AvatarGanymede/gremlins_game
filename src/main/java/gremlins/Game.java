@@ -1,15 +1,12 @@
 package gremlins;
 
-import gremlins.gameobjects.*;
 import gremlins.gameutils.GameProxy;
 import gremlins.levels.Level;
-import gremlins.levels.PrepareLevel;
+import gremlins.levels.textlevels.WelcomeLevel;
 import processing.core.PApplet;
-import processing.core.PFont;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Objects;
 
 import static gremlins.gameutils.GameConst.*;
 
@@ -38,7 +35,7 @@ public class Game extends PApplet {
         GameProxy.Instance().titleFont = createFont(this.getClass().getResource(TITLE_FONT).getPath().replace("%20", " "), TITLE_SIZE, true);
         GameProxy.Instance().textFont = createFont(TEXT_FONT, TEXT_SIZE, false);
 
-        level = new PrepareLevel();
+        level = new WelcomeLevel();
     }
 
     /**

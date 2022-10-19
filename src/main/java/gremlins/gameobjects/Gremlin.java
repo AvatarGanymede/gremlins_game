@@ -1,10 +1,14 @@
 package gremlins.gameobjects;
 
 import gremlins.gameutils.CollisionProxy;
+import gremlins.gameutils.GameProxy;
+import gremlins.gameutils.GameUtils;
+import gremlins.levels.GameLevel;
 import gremlins.monobehaviours.Collision;
 import gremlins.monobehaviours.FireSystem;
 import gremlins.monobehaviours.Movement;
 import gremlins.monobehaviours.Renderer;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 import static gremlins.gameutils.GameConst.*;
@@ -15,6 +19,11 @@ public class Gremlin extends GameObject{
         super(x, y);
         type = GO_TYPE.GREMLINS;
         InitMonos();
+    }
+    public void respawn(){
+        Movement movement = (Movement) getMono(MOVEMENT);
+        GameLevel level = (GameLevel) GameProxy.Instance().gameRef.level;
+        position.set(GameUtils.randomRespawnPos(level.player.position));
     }
 
     public PVector getDirection(){

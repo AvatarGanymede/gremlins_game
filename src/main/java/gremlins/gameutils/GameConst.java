@@ -21,6 +21,9 @@ public class GameConst {
     //public static final int SPRITE_SIZE = 20;
     //public static final int BOTTOM_BAR = 60;
 
+    public static final int MAX_PLAYER_LIVES = 3;
+    public static final int RESPAWN_DISTANCE = 10;
+
     public static final int FPS = 60;
     public static final double DELTA_TIME = 1.0/FPS;
     public static double PLAYER_COOL_DOWN_TIME;

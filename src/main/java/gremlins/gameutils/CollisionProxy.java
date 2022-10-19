@@ -2,7 +2,6 @@ package gremlins.gameutils;
 
 import gremlins.gameobjects.GameObject;
 import gremlins.monobehaviours.Movement;
-import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -54,6 +53,10 @@ public class CollisionProxy {
         }
     }
 
+    public boolean checkCollision(int x, int y){
+        return m_CollisionMap[x][y] == null || m_CollisionMap[x][y].count() == 0;
+    }
+
     public ArrayList<GameObject> checkCollision(GameObject go){
         ArrayList<GameObject> collisions = new ArrayList<>();
         PVector mapIndex = getMapIndex(go.position);
@@ -65,7 +68,7 @@ public class CollisionProxy {
                 if(j < 0 || j > TILE_NUM_Y-1){
                     continue;
                 }
-                if(m_CollisionMap[i][j] == null || m_CollisionMap[i][j].count() == 0){
+                if(checkCollision(i, j)){
                     continue;
                 }
                 for(GameObject collision : m_CollisionMap[i][j].getList()){
@@ -126,7 +129,7 @@ public class CollisionProxy {
         if(y < 0 || y > TILE_NUM_Y-1){
             return true;
         }
-        if(m_CollisionMap[x][y] == null || m_CollisionMap[x][y].count() == 0){
+        if(checkCollision(x, y)){
             return false;
         }
         for(GameObject go : m_CollisionMap[x][y].getList()){

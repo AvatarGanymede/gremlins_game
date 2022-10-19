@@ -1,8 +1,10 @@
 package gremlins.monobehaviours;
 
 import gremlins.gameobjects.GameObject;
-import gremlins.gameobjects.Slime;
+import gremlins.gameobjects.Gremlin;
+import gremlins.gameobjects.Player;
 import gremlins.gameutils.CollisionProxy;
+import gremlins.gameutils.GameProxy;
 
 import static gremlins.gameutils.GameConst.*;
 
@@ -28,10 +30,18 @@ public class Collision extends MonoBehaviour {
                     m_GameObject.position.y = movement.prevPosition.y;
                 }
             }
+            if(collision.type == GO_TYPE.GREMLINS || collision.type == GO_TYPE.SLIME){
+                Player player = (Player) m_GameObject;
+                player.beKilled();
+            }
         }
         if(m_GameObject.type == GO_TYPE.GREMLINS){
             if(collision.type == GO_TYPE.BRICKWALL || collision.type == GO_TYPE.STONEWALL){
                 m_GameObject.position.set(movement.prevPosition);
+            }
+            if(collision.type == GO_TYPE.PLAYER || collision.type == GO_TYPE.FIREBALL){
+                Gremlin gremlin = (Gremlin) m_GameObject;
+                gremlin.respawn();
             }
         }
         if(m_GameObject.type == GO_TYPE.FIREBALL){
@@ -61,7 +71,7 @@ public class Collision extends MonoBehaviour {
         for(GameObject collision : collisions){
             onHit(collision);
             Collision cCollision = (Collision) collision.getMono(COLLISION);
-            if(cCollision.m_IsStatic){
+            if(cCollision.m_IsStatic || m_GameObject.type == GO_TYPE.FIREBALL || m_GameObject.type == GO_TYPE.SLIME){
                 cCollision.onHit(m_GameObject);
             }
         }
