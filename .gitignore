@@ -27,3 +27,4 @@ replay_pid*
 *.probe
 *.xml
 *.iml
+./build
