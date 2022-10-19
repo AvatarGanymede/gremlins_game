@@ -110,6 +110,15 @@ public class CollisionProxy {
         }
     }
 
+    public void reset(){
+        for(int i = 0; i < TILE_NUM_X; i++){
+            for(int j = 0; j < TILE_NUM_Y; j++){
+                m_CollisionMap[i][j] = null;
+            }
+        }
+        m_Go2MapIndex.clear();
+    }
+
     private boolean isWall(int x, int y){
         if(x < 0 || x > TILE_NUM_X-1){
             return true;

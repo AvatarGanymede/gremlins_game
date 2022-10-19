@@ -1,12 +1,7 @@
 package gremlins.monobehaviours;
 
-import gremlins.gameobjects.FireBall;
 import gremlins.gameobjects.GameObject;
-import gremlins.gameutils.CollisionProxy;
-import gremlins.gameutils.GameProxy;
 import processing.core.PVector;
-
-import java.util.ArrayList;
 
 import static gremlins.gameutils.GameConst.*;
 

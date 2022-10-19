@@ -2,22 +2,23 @@ package gremlins;
 
 import gremlins.gameobjects.*;
 import gremlins.gameutils.GameProxy;
+import gremlins.levels.Level;
+import gremlins.levels.PrepareLevel;
 import processing.core.PApplet;
+import processing.core.PFont;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 
 import static gremlins.gameutils.GameConst.*;
 
 public class Game extends PApplet {
-    //public static final Random randomGenerator = new Random();
-
-    public Player player;
-    public StoneWall stoneWall;
-    public Gremlin gremlin;
-    public BrickWall brickWall;
-
-    public Game() { }
+    public Level level;
+    public boolean isLoaded;
+    public Game() {
+        isLoaded = false;
+    }
 
     /**
      * Initialise the setting of the window size.
@@ -31,55 +32,43 @@ public class Game extends PApplet {
     */
     public void setup() {
         frameRate(FPS);
-        PLAYER_COOL_DOWN_TIME = CONFIG.getJSONArray("levels").getJSONObject(0).getDouble("wizard_cooldown");
-        GREMLIN_COOL_DOWN_TIME = CONFIG.getJSONArray("levels").getJSONObject(0).getDouble("enemy_cooldown");
+        textAlign(CENTER);
 
         GameProxy.Instance().gameRef = this;
-        this.player = new Player(0, 0);
-        this.stoneWall = new StoneWall(100, 100);
-        this.gremlin = new Gremlin(80, 100);
-        this.brickWall = new BrickWall(120, 120);
+        GameProxy.Instance().titleFont = createFont(this.getClass().getResource(TITLE_FONT).getPath().replace("%20", " "), TITLE_SIZE, true);
+        GameProxy.Instance().textFont = createFont(TEXT_FONT, TEXT_SIZE, false);
+
+        level = new PrepareLevel();
     }
 
     /**
      * Receive key pressed signal from the keyboard.
     */
     public void keyPressed(){
-        if(!GameProxy.Instance().registeredKey.containsKey(keyCode)){
-            return;
+        if(level != null && isLoaded){
+            level.keyPressed(keyCode);
         }
-        if(GameProxy.Instance().registeredKey.get(keyCode)){
-            return;
-        }
-        GameProxy.Instance().registeredKey.put(keyCode, true);
-        player.keyPressed(keyCode);
     }
     
     /**
      * Receive key released signal from the keyboard.
     */
     public void keyReleased(){
-        if(!GameProxy.Instance().registeredKey.containsKey(keyCode)){
-            return;
+        if(level != null && isLoaded){
+            level.keyReleased(keyCode);
         }
-        GameProxy.Instance().registeredKey.put(keyCode, false);
-        player.keyReleased(keyCode);
     }
 
     /**
      * Draw all elements in the game by current frame. 
 	 */
     public void draw() {
-        background(255);
-        TIME_STAMP = TIME_STAMP.add(BigDecimal.valueOf(DELTA_TIME));
-        player.Update();
-        stoneWall.Update();
-        gremlin.Update();
-        brickWall.Update();
-        for(int hashCode : GameProxy.Instance().Entities.keySet()){
-            GameProxy.Instance().Entities.get(hashCode).Update();
+        background(BACKGROUND_COLOR[0], BACKGROUND_COLOR[1], BACKGROUND_COLOR[2]);
+        if(level != null && isLoaded){
+            TIME_STAMP = TIME_STAMP.add(BigDecimal.valueOf(DELTA_TIME));
+            level.Update();
+            FRAME_TICK = FRAME_TICK.add(BigInteger.ONE);
         }
-        FRAME_TICK = FRAME_TICK.add(BigInteger.ONE);
     }
 
     public static void main(String[] args) {

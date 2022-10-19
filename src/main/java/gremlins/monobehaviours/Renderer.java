@@ -32,6 +32,7 @@ public class Renderer extends MonoBehaviour {
             case GREMLINS -> paths = GREMLIN_PATHS;
             case STONEWALL -> paths = STONE_WALL_PATHS;
             case BRICKWALL -> paths = BRICK_WALL_PATHS;
+            case DOOR -> paths = DOOR_PATHS;
             default -> paths = null;
         }
         m_Images = new ArrayList<>();

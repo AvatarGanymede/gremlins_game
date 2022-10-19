@@ -1,10 +1,8 @@
 package gremlins.gameutils;
 
 import gremlins.Game;
-import gremlins.gameobjects.FireBall;
 import gremlins.gameobjects.GameObject;
-import gremlins.gameobjects.Slime;
-import org.checkerframework.checker.units.qual.C;
+import processing.core.PFont;
 
 import static gremlins.gameutils.GameConst.*;
 
@@ -16,13 +14,6 @@ public class GameProxy {
     public Game gameRef;
     public HashMap<Integer, Boolean> registeredKey;
     public GameProxy(){
-        registeredKey = new HashMap<>();
-        registeredKey.put(LEFT_KEY, false);
-        registeredKey.put(RIGHT_KEY, false);
-        registeredKey.put(UP_KEY, false);
-        registeredKey.put(DOWN_KEY, false);
-        registeredKey.put(FIRE_KEY, false);
-
         Entities = new ConcurrentHashMap<>();
     }
     public static GameProxy Instance(){
@@ -31,6 +22,27 @@ public class GameProxy {
         }
         return m_GameProxy;
     }
-
+    public void loadLevel(){
+        registerKeys();
+    }
+    public void unloadLevel(){
+        gameRef.isLoaded = false;
+        unregisterKeys();
+        Entities.clear();
+        CollisionProxy.Instance().reset();
+    }
+    private void registerKeys(){
+        registeredKey = new HashMap<>();
+        registeredKey.put(LEFT_KEY, false);
+        registeredKey.put(RIGHT_KEY, false);
+        registeredKey.put(UP_KEY, false);
+        registeredKey.put(DOWN_KEY, false);
+        registeredKey.put(FIRE_KEY, false);
+    }
+    private void unregisterKeys(){
+        registeredKey.clear();
+    }
     public ConcurrentHashMap<Integer, GameObject> Entities;
+    public PFont textFont;
+    public PFont titleFont;
 }
