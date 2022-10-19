@@ -49,7 +49,7 @@ public class GameConst {
     }
     public static final int PLAYER_VELOCITY = 2;
     public static final int FIREBALL_VELOCITY = 4;
-    public static final int GREMLINS_VELOCITY = 4;
+    public static final int GREMLINS_VELOCITY = 1;
     public static final String CONFIG_PATH = "config.json";
     public static final JSONObject CONFIG = PApplet.loadJSONObject(new File(CONFIG_PATH));
 
