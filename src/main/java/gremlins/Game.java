@@ -76,8 +76,8 @@ public class Game extends PApplet {
         stoneWall.Update();
         gremlin.Update();
         brickWall.Update();
-        for(int hashCode : GameProxy.Instance().FireBalls.keySet()){
-            GameProxy.Instance().FireBalls.get(hashCode).Update();
+        for(int hashCode : GameProxy.Instance().Entities.keySet()){
+            GameProxy.Instance().Entities.get(hashCode).Update();
         }
         FRAME_TICK = FRAME_TICK.add(BigInteger.ONE);
     }

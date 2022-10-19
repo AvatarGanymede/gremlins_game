@@ -44,12 +44,14 @@ public class GameConst {
         PLAYER,
         GREMLINS,
         FIREBALL,
+        SLIME,
         BRICKWALL,
         STONEWALL
     }
     public static final int PLAYER_VELOCITY = 2;
     public static final int FIREBALL_VELOCITY = 4;
     public static final int GREMLINS_VELOCITY = 1;
+    public static final int SLIME_VELOCITY = 4;
     public static final String CONFIG_PATH = "config.json";
     public static final JSONObject CONFIG = PApplet.loadJSONObject(new File(CONFIG_PATH));
 
@@ -59,7 +61,7 @@ public class GameConst {
     public static final String[] BRICK_WALL_PATHS = {"brickwall.png", "brickwall_destroyed0.png", "brickwall_destroyed1.png", "brickwall_destroyed2.png", "brickwall_destroyed3.png"};
     public static final String[] FIREBALL_PATHS = {"fireball.png"};
     public static final String[] GREMLIN_PATHS = {"gremlin.png"};
-    //public static final String[] SLIME_PATHS = {"slime.png"};
+    public static final String[] SLIME_PATHS = {"slime.png"};
     public static final String[] STONE_WALL_PATHS = {"stonewall.png"};
     public static final String[] WIZARD_PATHS = {"wizard0.png", "wizard1.png", "wizard2.png", "wizard3.png"};
 

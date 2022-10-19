@@ -28,6 +28,7 @@ public class Renderer extends MonoBehaviour {
         switch (m_GameObject.type) {
             case PLAYER -> paths = WIZARD_PATHS;
             case FIREBALL -> paths = FIREBALL_PATHS;
+            case SLIME -> paths = SLIME_PATHS;
             case GREMLINS -> paths = GREMLIN_PATHS;
             case STONEWALL -> paths = STONE_WALL_PATHS;
             case BRICKWALL -> paths = BRICK_WALL_PATHS;

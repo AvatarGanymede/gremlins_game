@@ -1,6 +1,7 @@
 package gremlins.monobehaviours;
 
 import gremlins.gameobjects.GameObject;
+import gremlins.gameobjects.Slime;
 import gremlins.gameutils.CollisionProxy;
 
 import static gremlins.gameutils.GameConst.*;
@@ -38,6 +39,11 @@ public class Collision extends MonoBehaviour {
                 m_GameObject.position.set(movement.prevPosition);
             }
         }
+        if(m_GameObject.type == GO_TYPE.SLIME){
+            if(collision.type != GO_TYPE.GREMLINS){
+                m_GameObject.position.set(movement.prevPosition);
+            }
+        }
         if(m_GameObject.type == GO_TYPE.BRICKWALL){
             if(collision.type == GO_TYPE.FIREBALL){
                 Renderer renderer = (Renderer) m_GameObject.getMono(RENDERER);
@@ -64,7 +70,7 @@ public class Collision extends MonoBehaviour {
             if(m_GameObject.type == GO_TYPE.GREMLINS){
                 movement.move.set(CollisionProxy.Instance().calcGremlinMove(m_GameObject, movement.move));
             }
-            if(m_GameObject.type == GO_TYPE.FIREBALL){
+            if(m_GameObject.type == GO_TYPE.FIREBALL || m_GameObject.type == GO_TYPE.SLIME){
                 m_GameObject.destroy();
             }
         }

@@ -2,6 +2,9 @@ package gremlins.gameutils;
 
 import gremlins.Game;
 import gremlins.gameobjects.FireBall;
+import gremlins.gameobjects.GameObject;
+import gremlins.gameobjects.Slime;
+import org.checkerframework.checker.units.qual.C;
 
 import static gremlins.gameutils.GameConst.*;
 
@@ -20,7 +23,7 @@ public class GameProxy {
         registeredKey.put(DOWN_KEY, false);
         registeredKey.put(FIRE_KEY, false);
 
-        FireBalls = new ConcurrentHashMap<>();
+        Entities = new ConcurrentHashMap<>();
     }
     public static GameProxy Instance(){
         if(m_GameProxy == null){
@@ -29,5 +32,5 @@ public class GameProxy {
         return m_GameProxy;
     }
 
-    public ConcurrentHashMap<Integer, FireBall> FireBalls;
+    public ConcurrentHashMap<Integer, GameObject> Entities;
 }

@@ -25,6 +25,7 @@ public class Movement extends MonoBehaviour {
             case PLAYER -> m_Velocity = PLAYER_VELOCITY;
             case FIREBALL -> m_Velocity = FIREBALL_VELOCITY;
             case GREMLINS -> m_Velocity = GREMLINS_VELOCITY;
+            case SLIME -> m_Velocity = SLIME_VELOCITY;
             default -> m_Velocity = 0;
         }
     }
@@ -53,7 +54,11 @@ public class Movement extends MonoBehaviour {
     private void fireBallMove(){
         PVector move = PVector.mult(this.move, m_Velocity);
         m_GameObject.position.add(move);
+    }
 
+    private void slimeMove(){
+        PVector move = PVector.mult(this.move, m_Velocity);
+        m_GameObject.position.add(move);
     }
 
     private void checkBoarder(){
@@ -72,6 +77,7 @@ public class Movement extends MonoBehaviour {
             case PLAYER -> playerMove();
             case GREMLINS -> gremlinMove();
             case FIREBALL -> fireBallMove();
+            case SLIME -> slimeMove();
         }
         checkBoarder();
     }
