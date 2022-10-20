@@ -5,6 +5,7 @@ import static gremlins.gameutils.GameConst.*;
 import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameProxy;
 import gremlins.levels.textlevels.GameOverLevel;
+import gremlins.levels.textlevels.LoseLevel;
 import gremlins.monobehaviours.Collision;
 import gremlins.monobehaviours.FireSystem;
 import gremlins.monobehaviours.Movement;
@@ -31,7 +32,7 @@ public class Player extends GameObject{
         killedFrame = FRAME_TICK.add(BigInteger.valueOf(FPS));
         if(lives < 0){
             GameProxy.Instance().gameRef.level.unloadLevel();
-            GameProxy.Instance().gameRef.level = new GameOverLevel();
+            GameProxy.Instance().gameRef.level = new LoseLevel();
         }
     }
     public PVector getDirection(){

@@ -3,7 +3,7 @@
     {
       "layout": "level1.txt",
       "wizard_cooldown": 0.3333,
-      "enemy_cooldown": 0.3
+      "enemy_cooldown": 3.0
     },
     {
       "layout": "level2.txt",
@@ -13,4 +13,3 @@
   ],
   "lives": 3
 }
-

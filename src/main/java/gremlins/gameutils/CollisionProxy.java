@@ -141,5 +141,5 @@ public class CollisionProxy {
     }
 
     private final GameObjectList[][] m_CollisionMap = new GameObjectList[TILE_NUM_X][TILE_NUM_Y];
-    private final HashMap<Integer, PVector> m_Go2MapIndex = new HashMap<>();
+    public final HashMap<Integer, PVector> m_Go2MapIndex = new HashMap<>();
 }

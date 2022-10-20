@@ -81,7 +81,7 @@ public class Renderer extends MonoBehaviour {
             return;
         }
         Stack<Integer> tmpStack = new Stack<>();
-        while(!Objects.equals(key, m_KeyStack.peek())) {
+        while(!key.equals(m_KeyStack.peek())) {
             tmpStack.push(m_KeyStack.peek());
             m_KeyStack.pop();
         }

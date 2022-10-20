@@ -1,7 +1,10 @@
 package gremlins.levels.textlevels;
 
+import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameProxy;
 import gremlins.levels.Level;
+import gremlins.monobehaviours.Collision;
+import processing.core.PApplet;
 
 import static gremlins.gameutils.GameConst.HEIGHT;
 import static gremlins.gameutils.GameConst.WIDTH;
@@ -38,5 +41,6 @@ public class TextLevel extends Level {
         GameProxy.Instance().gameRef.textFont(GameProxy.Instance().titleFont);
         GameProxy.Instance().gameRef.fill(255);
         GameProxy.Instance().gameRef.text(m_Text, WIDTH/2, HEIGHT/2);
+        PApplet.println(CollisionProxy.Instance().m_Go2MapIndex.size());
     }
 }

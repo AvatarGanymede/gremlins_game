@@ -5,6 +5,9 @@ import gremlins.gameobjects.Gremlin;
 import gremlins.gameobjects.Player;
 import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameProxy;
+import gremlins.levels.GameLevel;
+import gremlins.levels.textlevels.GameOverLevel;
+import processing.core.PApplet;
 
 import static gremlins.gameutils.GameConst.*;
 
@@ -20,6 +23,9 @@ public class Collision extends MonoBehaviour {
     }
 
     public void onHit(GameObject collision){
+        if(GameProxy.Instance().gameRef.level.player == null){
+            return;
+        }
         Movement movement = (Movement) m_GameObject.getMono(MOVEMENT);
         if(m_GameObject.type == GO_TYPE.PLAYER){
             if(collision.type == GO_TYPE.BRICKWALL || collision.type == GO_TYPE.STONEWALL){
@@ -34,6 +40,10 @@ public class Collision extends MonoBehaviour {
                 Player player = (Player) m_GameObject;
                 player.beKilled();
             }
+            if(collision.type == GO_TYPE.DOOR){
+                GameProxy.Instance().gameRef.level.unloadLevel();
+                GameProxy.Instance().gameRef.level = new GameLevel();
+            }
         }
         if(m_GameObject.type == GO_TYPE.GREMLINS){
             if(collision.type == GO_TYPE.BRICKWALL || collision.type == GO_TYPE.STONEWALL){
@@ -45,13 +55,13 @@ public class Collision extends MonoBehaviour {
             }
         }
         if(m_GameObject.type == GO_TYPE.FIREBALL){
-            if(collision.type != GO_TYPE.PLAYER){
-                m_GameObject.position.set(movement.prevPosition);
+            if(collision.type != GO_TYPE.PLAYER && collision.type != GO_TYPE.DOOR){
+                m_GameObject.destroy();
             }
         }
         if(m_GameObject.type == GO_TYPE.SLIME){
-            if(collision.type != GO_TYPE.GREMLINS){
-                m_GameObject.position.set(movement.prevPosition);
+            if(collision.type != GO_TYPE.GREMLINS && collision.type != GO_TYPE.DOOR && collision.type != GO_TYPE.SLIME){
+                m_GameObject.destroy();
             }
         }
         if(m_GameObject.type == GO_TYPE.BRICKWALL){
@@ -71,19 +81,13 @@ public class Collision extends MonoBehaviour {
         for(GameObject collision : collisions){
             onHit(collision);
             Collision cCollision = (Collision) collision.getMono(COLLISION);
-            if(cCollision.m_IsStatic){
-                cCollision.onHit(m_GameObject);
-            }
-            if(collision.type == GO_TYPE.PLAYER){
-                cCollision.onHit(m_GameObject);
-            }
+            cCollision.onHit(m_GameObject);
         }
         Movement movement = (Movement) m_GameObject.getMono(MOVEMENT);
         if(movement != null && m_GameObject.position.equals(movement.prevPosition)){
             if(m_GameObject.type == GO_TYPE.GREMLINS){
                 movement.move.set(CollisionProxy.Instance().calcGremlinMove(m_GameObject, movement.move));
-            }
-            if(m_GameObject.type == GO_TYPE.FIREBALL || m_GameObject.type == GO_TYPE.SLIME){
+            }else{
                 m_GameObject.destroy();
             }
         }

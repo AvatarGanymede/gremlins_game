@@ -1,5 +1,6 @@
 package gremlins.levels;
 
+import gremlins.gameobjects.Player;
 import gremlins.gameutils.GameProxy;
 
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ import static gremlins.gameutils.GameConst.FRAME_TICK;
 import static gremlins.gameutils.GameConst.TIME_STAMP;
 
 public abstract class Level{
+    public Player player;
     protected boolean m_IsUnloaded;
     public Level(){
         TIME_STAMP = BigDecimal.ZERO;

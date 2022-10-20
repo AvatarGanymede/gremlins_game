@@ -4,6 +4,7 @@ import gremlins.gameobjects.*;
 import gremlins.gameobjects.projectiles.FireBall;
 import gremlins.gameobjects.projectiles.Slime;
 import gremlins.gameutils.GameUtils;
+import processing.core.PVector;
 
 import java.math.BigDecimal;
 
@@ -30,7 +31,10 @@ public class FireSystem extends MonoBehaviour{
     public void OnUpdate() {
         if(m_GameObject.type == GO_TYPE.GREMLINS && TIME_STAMP.compareTo(nextShootTime) >= 0){
             Gremlin gremlin = (Gremlin) m_GameObject;
-            Slime.create((int)m_GameObject.position.x, (int)m_GameObject.position.y, gremlin.getDirection());
+            PVector dir = gremlin.getDirection();
+            if(!dir.equals(ZERO_VECTOR)){
+                Slime.create((int)m_GameObject.position.x, (int)m_GameObject.position.y, dir);
+            }
             nextShootTime = TIME_STAMP.add(BigDecimal.valueOf(coolDownTime));
         }
     }

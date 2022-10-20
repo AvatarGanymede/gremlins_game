@@ -4,6 +4,8 @@ import gremlins.gameobjects.*;
 import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameProxy;
 import gremlins.gameutils.GameUtils;
+import gremlins.levels.textlevels.GameOverLevel;
+import gremlins.levels.textlevels.WinLevel;
 import gremlins.monobehaviours.FireSystem;
 import gremlins.monobehaviours.Renderer;
 import processing.core.PVector;
@@ -19,7 +21,8 @@ import static gremlins.gameutils.GameConst.CONFIG;
 public class GameLevel extends Level {
     public static int levelIndex = 0;
     public static int maxLevels;
-    public Player player;
+    public static boolean loadSuccess = false;
+    public static boolean win = false;
     private int m_wizardNum;
     private int m_doorNum;
     public GameLevel(){
@@ -61,16 +64,32 @@ public class GameLevel extends Level {
         if(!GameProxy.Instance().registeredKey.containsKey(keyCode)){
             return;
         }
+        if(!GameProxy.Instance().registeredKey.get(keyCode)){
+            return;
+        }
         GameProxy.Instance().registeredKey.put(keyCode, false);
         player.keyReleased(keyCode);
     }
 
     @Override
     public void Update() {
+        if(!loadSuccess){
+            GameProxy.Instance().gameRef.level.unloadLevel();
+            GameProxy.Instance().gameRef.level = new GameOverLevel();
+            return;
+        }
+        if(win){
+            GameProxy.Instance().gameRef.level.unloadLevel();
+            GameProxy.Instance().gameRef.level = new WinLevel();
+            return;
+        }
         for(Integer hashCode : GameProxy.Instance().entities.keySet()){
-            GameProxy.Instance().entities.get(hashCode).Update();
             if(m_IsUnloaded){
                 return;
+            }
+            GameObject entity = GameProxy.Instance().entities.get(hashCode);
+            if(entity != null){
+                GameProxy.Instance().entities.get(hashCode).Update();
             }
         }
         UIUpdate();
@@ -87,7 +106,7 @@ public class GameLevel extends Level {
         // Lives:
         String lives = "Lives: ";
         offsetX += GameProxy.Instance().gameRef.textWidth(lives)/2;
-        GameProxy.Instance().gameRef.text(lives, offsetX, offsetY+4);
+        GameProxy.Instance().gameRef.text(lives,+ offsetX, offsetY+4);
         offsetX += GameProxy.Instance().gameRef.textWidth(lives)/2;
 
         Renderer renderer = (Renderer) player.getMono(RENDERER);
@@ -122,7 +141,8 @@ public class GameLevel extends Level {
         m_wizardNum = 0;
         m_doorNum = 0;
         maxLevels = CONFIG.getJSONArray("levels").size();
-        if(levelIndex > maxLevels){
+        if(levelIndex >= maxLevels){
+            win = loadSuccess;
             return;
         }
         PLAYER_COOL_DOWN_TIME = CONFIG.getJSONArray("levels").getJSONObject(levelIndex).getDouble("wizard_cooldown");
@@ -131,6 +151,8 @@ public class GameLevel extends Level {
         if(!checkValidLevel(levelPath)){
             unloadLevel();
             loadLevel();
+        }else{
+            loadSuccess = true;
         }
     }
     private boolean checkValidLevel(String levelPath){
