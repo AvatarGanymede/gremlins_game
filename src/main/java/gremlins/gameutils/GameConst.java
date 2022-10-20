@@ -16,10 +16,10 @@ public class GameConst {
     public static final int TILE_NUM_X = 36;
     public static final int TILE_NUM_Y = 33;
     public static final int TILE_SIZE = 20;
-
-
-    //public static final int SPRITE_SIZE = 20;
-    //public static final int BOTTOM_BAR = 60;
+    public static final int BOTTOM_BAR = 60;
+    public static final int COOL_DOWN_BAR_WIDTH = 120;
+    public static final int COOL_DOWN_BAR_HEIGHT = 10;
+    public static final int COOL_DOWN_BAR_BOLD = 2;
 
     public static final int MAX_PLAYER_LIVES = 3;
     public static final int RESPAWN_DISTANCE = 10;

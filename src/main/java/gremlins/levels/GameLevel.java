@@ -4,11 +4,14 @@ import gremlins.gameobjects.*;
 import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameProxy;
 import gremlins.gameutils.GameUtils;
+import gremlins.monobehaviours.FireSystem;
+import gremlins.monobehaviours.Renderer;
 import processing.core.PVector;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import static gremlins.gameutils.GameConst.*;
 import static gremlins.gameutils.GameConst.CONFIG;
@@ -69,6 +72,49 @@ public class GameLevel extends Level {
             if(m_IsUnloaded){
                 return;
             }
+        }
+        UIUpdate();
+    }
+
+    public void UIUpdate(){
+        float top = (float) HEIGHT - (float) BOTTOM_BAR;
+        float bottom = (float) HEIGHT;
+        float offsetX = 10;
+        float offsetY = (top+bottom)/2;
+        GameProxy.Instance().gameRef.textFont(GameProxy.Instance().textFont);
+        GameProxy.Instance().gameRef.fill(FONT_COLOR);
+
+        // Lives:
+        String lives = "Lives: ";
+        offsetX += GameProxy.Instance().gameRef.textWidth(lives)/2;
+        GameProxy.Instance().gameRef.text(lives, offsetX, offsetY+4);
+        offsetX += GameProxy.Instance().gameRef.textWidth(lives)/2;
+
+        Renderer renderer = (Renderer) player.getMono(RENDERER);
+        for(int i = 0; i < player.lives; i++){
+            GameProxy.Instance().gameRef.image(renderer.images.get(0), offsetX + i*TILE_SIZE, offsetY-TILE_SIZE/2);
+        }
+
+        offsetX += TILE_SIZE*MAX_PLAYER_LIVES + 60;
+
+        // level
+        String level = String.format("Level %d/%d", levelIndex+1, maxLevels);
+        GameProxy.Instance().gameRef.text(level, offsetX, offsetY+4);
+        offsetX += GameProxy.Instance().gameRef.textWidth(level)/2;
+
+        offsetX = WIDTH - 10 - COOL_DOWN_BAR_WIDTH;
+        // cool down bar
+        FireSystem fireSys = (FireSystem) player.getMono(FIRE_SYSTEM);
+        if(fireSys.shootTime.compareTo(BigDecimal.valueOf(-1)) != 0 && TIME_STAMP.compareTo(fireSys.nextShootTime) < 0){
+            GameProxy.Instance().gameRef.fill(0);
+            GameProxy.Instance().gameRef.rect(offsetX, offsetY-COOL_DOWN_BAR_HEIGHT/2, COOL_DOWN_BAR_WIDTH, COOL_DOWN_BAR_HEIGHT);
+            GameProxy.Instance().gameRef.fill(255);
+            GameProxy.Instance().gameRef.rect(offsetX+COOL_DOWN_BAR_BOLD, offsetY-(COOL_DOWN_BAR_HEIGHT/2-COOL_DOWN_BAR_BOLD), COOL_DOWN_BAR_WIDTH-COOL_DOWN_BAR_BOLD*2, COOL_DOWN_BAR_HEIGHT-COOL_DOWN_BAR_BOLD*2);
+            BigDecimal deltaTime = TIME_STAMP.subtract(fireSys.shootTime);
+            double ratio = deltaTime.doubleValue()/fireSys.coolDownTime;
+            double barWidth = COOL_DOWN_BAR_WIDTH * ratio;
+            GameProxy.Instance().gameRef.fill(0);
+            GameProxy.Instance().gameRef.rect(offsetX, offsetY-COOL_DOWN_BAR_HEIGHT/2, (float) barWidth, COOL_DOWN_BAR_HEIGHT);
         }
     }
 

@@ -16,7 +16,7 @@ import static gremlins.gameutils.GameConst.*;
 public class Renderer extends MonoBehaviour {
     public int pathIndex;
     public boolean beDestroyed;
-    private final ArrayList<PImage> m_Images;
+    public final ArrayList<PImage> images;
     private final Stack<Integer> m_KeyStack;
     public Renderer(GameObject gameObject){
         super(gameObject);
@@ -35,26 +35,26 @@ public class Renderer extends MonoBehaviour {
             case DOOR -> paths = DOOR_PATHS;
             default -> paths = null;
         }
-        m_Images = new ArrayList<>();
+        images = new ArrayList<>();
         if(paths != null){
             for(String path : paths){
                 try{
-                    m_Images.add(gameRef.loadImage(Objects.requireNonNull(gameRef.getClass().getResource(path)).getPath().replace("%20", " ")));
+                    images.add(gameRef.loadImage(Objects.requireNonNull(gameRef.getClass().getResource(path)).getPath().replace("%20", " ")));
                 }catch (NullPointerException ignored) { }
             }
         }
     }
     @Override
     public void OnUpdate() {
-        if(m_Images == null){
+        if(images == null){
             return;
         }
         PVector position = m_GameObject.position;
         if(beDestroyed && FRAME_TICK.mod(BigInteger.valueOf(BRICK_DESTROY_DELTA_FRAME)).compareTo(BigInteger.ZERO) == 0){
             pathIndex ++;
         }
-        if(pathIndex < m_Images.size()){
-            GameProxy.Instance().gameRef.image(m_Images.get(pathIndex), position.x, position.y);
+        if(pathIndex < images.size()){
+            GameProxy.Instance().gameRef.image(images.get(pathIndex), position.x, position.y);
         }else{
             m_GameObject.destroy();
         }
