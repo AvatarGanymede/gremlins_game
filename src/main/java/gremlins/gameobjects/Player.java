@@ -11,16 +11,24 @@ import gremlins.monobehaviours.Movement;
 import gremlins.monobehaviours.Renderer;
 import processing.core.PVector;
 
+import java.math.BigInteger;
+
 public class Player extends GameObject{
     public int lives;
+    public BigInteger killedFrame;
     public Player(int x, int y){
         super(x, y);
         type = GO_TYPE.PLAYER;
         lives = MAX_PLAYER_LIVES;
+        killedFrame = new BigInteger("-1");
         InitMonos();
     }
     public void beKilled(){
+        if(killedFrame.intValue() != -1 && killedFrame.compareTo(FRAME_TICK) >= 0){
+            return;
+        }
         lives --;
+        killedFrame = FRAME_TICK.add(BigInteger.valueOf(FPS));
         if(lives < 0){
             GameProxy.Instance().gameRef.level.unloadLevel();
             GameProxy.Instance().gameRef.level = new GameOverLevel();

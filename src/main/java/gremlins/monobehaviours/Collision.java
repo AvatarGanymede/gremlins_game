@@ -71,7 +71,10 @@ public class Collision extends MonoBehaviour {
         for(GameObject collision : collisions){
             onHit(collision);
             Collision cCollision = (Collision) collision.getMono(COLLISION);
-            if(cCollision.m_IsStatic || m_GameObject.type == GO_TYPE.FIREBALL || m_GameObject.type == GO_TYPE.SLIME){
+            if(cCollision.m_IsStatic){
+                cCollision.onHit(m_GameObject);
+            }
+            if(collision.type == GO_TYPE.PLAYER){
                 cCollision.onHit(m_GameObject);
             }
         }
