@@ -26,6 +26,9 @@ public class GameProxy {
         }
         return m_GameProxy;
     }
+    public static void reset(){
+        m_GameProxy = null;
+    }
     public void loadLevel(){
         registerKeys();
     }

@@ -1,0 +1,10 @@
+{
+  "levels": [
+    {
+      "layout": "testcases/testlevel3.txt",
+      "wizard_cooldown": 0.3333,
+      "enemy_cooldown": 3.0
+    }
+  ],
+  "lives": 3
+}

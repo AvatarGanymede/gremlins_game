@@ -35,7 +35,7 @@ dependencies {
 
 application {
     // Define the main class for the application
-    mainClassName = 'gremlins.App'
+    mainClassName = 'gremlins.Game'
 }
 
 test {
@@ -47,24 +47,9 @@ test {
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
-        attributes 'Main-Class': 'gremlins.App'
+        attributes 'Main-Class': 'gremlins.Game'
     }
     from {
         configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
-    }
-}
-
-test {
-    useJUnitPlatform()
-    exclude '**/**IgnoreTest.class'
-    finalizedBy jacocoTestReport       // report is always generated after tests run
-}
-
-jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
-    reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination file("${buildDir}/reports/jacoco")
     }
 }

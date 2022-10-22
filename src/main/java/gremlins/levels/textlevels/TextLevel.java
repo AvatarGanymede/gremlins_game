@@ -7,7 +7,7 @@ import static gremlins.gameutils.GameConst.HEIGHT;
 import static gremlins.gameutils.GameConst.WIDTH;
 
 public class TextLevel extends Level {
-    protected String m_Text;
+    public String text;
     public TextLevel(){
         super();
         loadLevel();
@@ -40,6 +40,6 @@ public class TextLevel extends Level {
     public void Update() {
         GameProxy.Instance().gameRef.textFont(GameProxy.Instance().titleFont);
         GameProxy.Instance().gameRef.fill(255);
-        GameProxy.Instance().gameRef.text(m_Text, WIDTH/2, HEIGHT/2);
+        GameProxy.Instance().gameRef.text(text, WIDTH/2, HEIGHT/2);
     }
 }

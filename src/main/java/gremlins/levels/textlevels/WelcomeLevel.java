@@ -6,7 +6,7 @@ import gremlins.levels.GameLevel;
 public class WelcomeLevel extends TextLevel {
     public WelcomeLevel(){
         super();
-        m_Text = "PRESS ANY KEY\nTO START";
+        text = "PRESS ANY KEY\nTO START";
     }
 
     @Override

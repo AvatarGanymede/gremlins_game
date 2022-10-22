@@ -39,8 +39,8 @@ public class GameConst {
     public static final int FIRE_KEY = 32;
     public static final Map<Integer, PVector> KEY2DIRECTION = Map.of(
             LEFT_KEY, new PVector(-1, 0),
-            RIGHT_KEY, new PVector(1, 0),
             UP_KEY, new PVector(0, -1),
+            RIGHT_KEY, new PVector(1, 0),
             DOWN_KEY, new PVector(0, 1)
     );
     public enum GO_TYPE{
@@ -50,14 +50,15 @@ public class GameConst {
         SLIME,
         BRICKWALL,
         STONEWALL,
-        DOOR
+        DOOR,
+        TEST
     }
     public static final int PLAYER_VELOCITY = 2;
     public static final int FIREBALL_VELOCITY = 4;
     public static final int GREMLINS_VELOCITY = 1;
     public static final int SLIME_VELOCITY = 4;
-    public static final String CONFIG_PATH = "config.json";
-    public static final JSONObject CONFIG = PApplet.loadJSONObject(new File(CONFIG_PATH));
+    public static String CONFIG_PATH = "config.json";
+    public static JSONObject CONFIG = PApplet.loadJSONObject(new File(CONFIG_PATH));
 
     public static final Map<Integer, Integer> PLAYER_KEY2INDEX = Map.of(LEFT_KEY, 0, RIGHT_KEY, 1, UP_KEY, 2, DOWN_KEY, 3);
     public static final Map<Integer, Integer> PLAYER_INDEX2KEY = Map.of(0, LEFT_KEY, 1, RIGHT_KEY, 2, UP_KEY, 3, DOWN_KEY);

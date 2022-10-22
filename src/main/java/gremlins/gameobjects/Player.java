@@ -37,10 +37,7 @@ public class Player extends GameObject{
     }
     public PVector getDirection(){
         Renderer renderer = (Renderer) m_Monos.get(RENDERER);
-        if(renderer == null){
-            return null;
-        }
-        return KEY2DIRECTION.get(PLAYER_INDEX2KEY.get(renderer.pathIndex));
+        return KEY2DIRECTION.get(PLAYER_INDEX2KEY.get(renderer.pathIndex)).copy();
     }
     @Override
     protected void InitMonos(){

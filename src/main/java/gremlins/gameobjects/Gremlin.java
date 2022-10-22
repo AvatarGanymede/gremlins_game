@@ -28,9 +28,6 @@ public class Gremlin extends GameObject{
 
     public PVector getDirection(){
         Movement movement = (Movement) m_Monos.get(MOVEMENT);
-        if(movement == null){
-            return null;
-        }
         return movement.move;
     }
 

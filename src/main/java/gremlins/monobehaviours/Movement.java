@@ -83,7 +83,8 @@ public class Movement extends MonoBehaviour {
             return;
         }
         PVector move = KEY2DIRECTION.get(key);
-        this.move.add(move);
+        this.move.x = Math.abs(this.move.x + move.x) > 1 ? this.move.x : this.move.x + move.x;
+        this.move.y = Math.abs(this.move.y + move.y) > 1 ? this.move.y : this.move.y + move.y;
     }
 
     @Override
@@ -98,6 +99,7 @@ public class Movement extends MonoBehaviour {
             m_PrevHorizontalMove = move.copy(); m_PrevHorizontalMove.y = 0;
         }
         PVector move = KEY2DIRECTION.get(key);
-        this.move.sub(move);
+        this.move.x = Math.abs(this.move.x - move.x) > 1 ? this.move.x : this.move.x - move.x;
+        this.move.y = Math.abs(this.move.y - move.y) > 1 ? this.move.y : this.move.y - move.y;
     }
 }

@@ -3,7 +3,6 @@ package gremlins;
 import gremlins.gameutils.GameProxy;
 import gremlins.levels.Level;
 import gremlins.levels.textlevels.WelcomeLevel;
-import org.checkerframework.checker.units.qual.A;
 import processing.core.PApplet;
 import processing.core.PImage;
 

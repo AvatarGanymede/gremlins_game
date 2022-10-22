@@ -1,0 +1,30 @@
+{
+  "levels": [
+    {
+      "layout": "testcases/testlevel6.txt",
+      "wizard_cooldown": 0.3333,
+      "enemy_cooldown": 3.0
+    },
+    {
+      "layout": "testcases/testlevel7.txt",
+      "wizard_cooldown": 0.3333,
+      "enemy_cooldown": 3.0
+    },
+    {
+      "layout": "testcases/testlevel8.txt",
+      "wizard_cooldown": 0.3333,
+      "enemy_cooldown": 3.0
+    },
+    {
+      "layout": "testcases/testlevel9.txt",
+      "wizard_cooldown": 0.3333,
+      "enemy_cooldown": 3.0
+    },
+    {
+      "layout": "testcases/testlevel10.txt",
+      "wizard_cooldown": 0.3333,
+      "enemy_cooldown": 3.0
+    }
+  ],
+  "lives": 3
+}

@@ -101,7 +101,7 @@ public class CollisionProxy {
         PVector mapIndex = getMapIndex(go.position);
         ArrayList<PVector> choices = new ArrayList<>();
         for(Integer dir : KEY2DIRECTION.keySet()){
-            PVector dirMove = KEY2DIRECTION.get(dir);
+            PVector dirMove = KEY2DIRECTION.get(dir).copy();
             if((dirMove.x*prevMove.x + dirMove.y*prevMove.y == 0) && !isWall((int)(dirMove.x+mapIndex.x), (int)(dirMove.y+mapIndex.y))){
                 choices.add(dirMove);
             }
