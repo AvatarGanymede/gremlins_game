@@ -41,6 +41,9 @@ public class FireSystem extends MonoBehaviour{
 
     @Override
     public void keyPressed(Integer key) {
+        if(m_GameObject.type != GO_TYPE.PLAYER){
+            return;
+        }
         if(key == FIRE_KEY && TIME_STAMP.compareTo(nextShootTime) >= 0){
             Player player = (Player) m_GameObject;
             FireBall.create((int)m_GameObject.position.x, (int)m_GameObject.position.y, player.getDirection());

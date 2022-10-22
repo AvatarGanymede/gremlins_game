@@ -6,8 +6,6 @@ import gremlins.gameobjects.Player;
 import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameProxy;
 import gremlins.levels.GameLevel;
-import gremlins.levels.textlevels.GameOverLevel;
-import processing.core.PApplet;
 
 import static gremlins.gameutils.GameConst.*;
 

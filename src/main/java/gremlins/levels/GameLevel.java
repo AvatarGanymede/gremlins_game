@@ -1,5 +1,6 @@
 package gremlins.levels;
 
+import gremlins.Game;
 import gremlins.gameobjects.*;
 import gremlins.gameutils.CollisionProxy;
 import gremlins.gameutils.GameProxy;
@@ -32,6 +33,9 @@ public class GameLevel extends Level {
 
     @Override
     public void loadLevel() {
+        if(GameProxy.Instance().gameRef == null){
+            return;
+        }
         GameProxy.Instance().loadLevel();
         loadLevelConfig();
         GameProxy.Instance().gameRef.isLoaded = true;
@@ -49,6 +53,9 @@ public class GameLevel extends Level {
 
     @Override
     public void keyPressed(Integer keyCode) {
+        if(m_IsUnloaded){
+            return;
+        }
         if(!GameProxy.Instance().registeredKey.containsKey(keyCode)){
             return;
         }
@@ -61,6 +68,9 @@ public class GameLevel extends Level {
 
     @Override
     public void keyReleased(Integer keyCode) {
+        if(m_IsUnloaded){
+            return;
+        }
         if(!GameProxy.Instance().registeredKey.containsKey(keyCode)){
             return;
         }

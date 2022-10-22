@@ -15,7 +15,7 @@ public abstract class Level{
     public Level(){
         TIME_STAMP = BigDecimal.ZERO;
         FRAME_TICK = BigInteger.ZERO;
-        GameProxy.Instance().gameRef.isLoaded = true;
+        m_IsUnloaded = true;
     }
     public abstract void loadLevel();
     public abstract void unloadLevel();

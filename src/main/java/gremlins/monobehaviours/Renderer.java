@@ -16,32 +16,22 @@ import static gremlins.gameutils.GameConst.*;
 public class Renderer extends MonoBehaviour {
     public int pathIndex;
     public boolean beDestroyed;
-    public final ArrayList<PImage> images;
+    public ArrayList<PImage> images;
     private final Stack<Integer> m_KeyStack;
     public Renderer(GameObject gameObject){
         super(gameObject);
         pathIndex = 0;
         beDestroyed = false;
         m_KeyStack = new Stack<>();
-        Game gameRef = GameProxy.Instance().gameRef;
-        String[] paths;
         switch (m_GameObject.type) {
-            case PLAYER -> paths = WIZARD_PATHS;
-            case FIREBALL -> paths = FIREBALL_PATHS;
-            case SLIME -> paths = SLIME_PATHS;
-            case GREMLINS -> paths = GREMLIN_PATHS;
-            case STONEWALL -> paths = STONE_WALL_PATHS;
-            case BRICKWALL -> paths = BRICK_WALL_PATHS;
-            case DOOR -> paths = DOOR_PATHS;
-            default -> paths = null;
-        }
-        images = new ArrayList<>();
-        if(paths != null){
-            for(String path : paths){
-                try{
-                    images.add(gameRef.loadImage(Objects.requireNonNull(gameRef.getClass().getResource(path)).getPath().replace("%20", " ")));
-                }catch (NullPointerException ignored) { }
-            }
+            case PLAYER -> images = Game.wizardImages;
+            case FIREBALL -> images = Game.fireballImages;
+            case SLIME -> images = Game.slimeImages;
+            case GREMLINS -> images = Game.gremlinImages;
+            case STONEWALL -> images = Game.stonewallImages;
+            case BRICKWALL -> images = Game.brickWallImages;
+            case DOOR -> images = Game.doorImages;
+            default -> images = null;
         }
     }
     @Override
